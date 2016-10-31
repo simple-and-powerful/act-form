@@ -6,3 +6,5 @@ module FormModel
     include Model
   end
 end
+
+require 'form_model/railtie' if defined?(Rails)
