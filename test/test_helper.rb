@@ -44,7 +44,11 @@ class User
   end
 
   def save
-    true
+    @saved = true
+  end
+
+  def saved?
+    !!@saved
   end
 end
 
@@ -80,5 +84,17 @@ class UserForm < RecordForm
   attribute :name, String
 
   combine EmailForm, PhoneForm
+end
+
+class CreateUserCommand < FormModel::Command
+  attribute :user
+
+  combine UserForm
+
+  def perform
+    sync(user)
+    user.save
+    'saved'
+  end
 end
 

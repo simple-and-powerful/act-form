@@ -96,4 +96,20 @@ describe FormModel do
     end
   end
 
+  describe 'Command' do
+    it 'should as runnable with run method' do
+      @user = User.new
+      command = CreateUserCommand.run(user: @user)
+      command.user.must_equal @user
+      command.success?.must_equal false
+    end
+
+    it 'should as runnable with run method successful' do
+      @user = User.new
+      command = CreateUserCommand.run(user: @user, name: 'Name', email: 'z@g.com', phone: '12345678909')
+      command.success?.must_equal true
+      command.result.must_equal 'saved'
+      @user.saved?.must_equal true
+    end
+  end
 end

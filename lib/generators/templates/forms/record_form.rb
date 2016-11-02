@@ -6,13 +6,9 @@ class RecordForm < FormModel::Base
     super(@extract_attrs.merge(attrs))
   end
 
-  def sync
-    super(@record)
-  end
-
   def save
     if valid?
-      sync
+      sync(@record)
       @persisted = @record.save
     else
       false
