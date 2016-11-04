@@ -10,14 +10,14 @@ Bar = Struct.new('Bar', *BarAttributes) do
 end
 
 class EmailForm < FormModel::Base
-  attribute :email, String
+  attribute :email
 
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 end
 
 class FooForm < FormModel::Base
-  attribute :name, String
-  attribute :age,  Integer
+  attribute :name
+  attribute :age, :integer
 
   validates_presence_of :name, :age
 
@@ -56,7 +56,7 @@ class RecordForm < FormModel::Base
   attr_reader :record
   def initialize(record, **attrs)
     @record = record
-    @extract_attrs = @record.attributes.extract! *self.class.attribute_set.map(&:name).map(&:to_s)
+    @extract_attrs = @record.attributes.extract! *self.class.attribute_set.keys.map(&:to_s)
     super(@extract_attrs.merge(attrs))
   end
 
@@ -75,13 +75,13 @@ class RecordForm < FormModel::Base
 end
 
 class PhoneForm < FormModel::Base
-  attribute :phone, String
+  attribute :phone
 
   validates_format_of :phone, with: /\A\d{11}\z/i
 end
 
 class UserForm < RecordForm
-  attribute :name, String
+  attribute :name
 
   combine EmailForm, PhoneForm
 end

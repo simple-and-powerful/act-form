@@ -1,22 +1,25 @@
 require 'active_support/core_ext/object/deep_dup'
 require 'active_model'
-require 'virtus'
+# require 'virtus'
+require 'form_model/attributes'
 require 'form_model/combinable'
 
 module FormModel
   module Model
     extend ActiveSupport::Concern
-    include ActiveModel::Validations
-    include ActiveModel::Conversion
+    # include ActiveModel::Validations
+    # include ActiveModel::Conversion
 
     included do
-      extend ActiveModel::Naming
-      extend ActiveModel::Translation
-      include Virtus.model
+      include ActiveModel::Model
+      # extend ActiveModel::Naming
+      # extend ActiveModel::Translation
+      include FormModel::Attributes
+      # include Virtus.model
     end
 
     def sync(target)
-      self.class.attribute_set.map(&:name).each do |attr|
+      self.class.attribute_set.keys.each do |attr|
         target.public_send("#{attr}=", public_send(attr)) if target.respond_to?(attr)
       end
     end
