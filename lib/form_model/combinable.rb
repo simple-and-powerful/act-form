@@ -20,7 +20,7 @@ module FormModel
 
           self._forms << form_class
 
-          self.attribute_set.merge(form_class.attribute_set)
+          self.merge(form_class.attribute_set)
 
           Utils.merge(self._validators, form_class._validators)
 

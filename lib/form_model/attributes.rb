@@ -1,4 +1,4 @@
-require 'active_model/type'
+require 'form_model/type'
 
 module FormModel
   module Attributes
@@ -9,12 +9,29 @@ module FormModel
       self.attribute_set = {}
     end
 
+    def attributes
+      self.class.attribute_set.keys.map do |attr|
+        [attr, public_send(attr)]
+      end.to_h
+    end
+
     module ClassMethods
-      def attribute(name, cast_type = :string, **options)
-        self.attribute_set = attribute_set.merge(name => [cast_type, options])
+      # attribute :name, type: :string
+      # or
+      # attribute :name, :string
+      def attribute(name, cast_type = :object, **options)
+        name = name.to_s
+        self.attribute_set = attribute_set.merge(name => [(options[:type] || cast_type), options])
 
         define_attribute_reader(name, options)
         define_attribute_writer(name, cast_type, options)
+      end
+
+      def merge(new_attribute_set)
+        new_attribute_set.each do |attr_name, attr_arr|
+          cast_type, options = attr_arr
+          attribute attr_name, cast_type, options
+        end
       end
 
       def define_attribute_reader(name, options)

@@ -7,16 +7,8 @@ require 'form_model/combinable'
 module FormModel
   module Model
     extend ActiveSupport::Concern
-    # include ActiveModel::Validations
-    # include ActiveModel::Conversion
-
-    included do
-      include ActiveModel::Model
-      # extend ActiveModel::Naming
-      # extend ActiveModel::Translation
-      include FormModel::Attributes
-      # include Virtus.model
-    end
+    include ActiveModel::Model
+    include FormModel::Attributes
 
     def sync(target)
       self.class.attribute_set.keys.each do |attr|
@@ -39,12 +31,13 @@ module FormModel
 
     class_methods do
       private
+
       def inherited(child_class)
         child_class._validators = self._validators.deep_dup
         child_class._validate_callbacks = self._validate_callbacks.deep_dup
         child_class.include Combinable
         super
       end
-    end
+    end # class_methods
   end
 end

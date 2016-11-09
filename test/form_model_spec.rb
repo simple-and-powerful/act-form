@@ -7,7 +7,7 @@ describe FormModel do
     @bar  = Bar.new
     @form.sync(@bar)
     BarAttributes.each do |attr|
-      if (val = attributes[attr]) && form_class.attribute_set[attr]
+      if (val = attributes[attr]) && form_class.attribute_set[attr.to_s]
         @bar.public_send(attr).must_equal val
       else
         @bar.public_send(attr).must_be_nil

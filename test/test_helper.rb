@@ -17,7 +17,7 @@ end
 
 class FooForm < FormModel::Base
   attribute :name
-  attribute :age, :integer
+  attribute :age, type: :integer
 
   validates_presence_of :name, :age
 
@@ -52,35 +52,13 @@ class User
   end
 end
 
-class RecordForm < FormModel::Base
-  attr_reader :record
-  def initialize(record, **attrs)
-    @record = record
-    @extract_attrs = @record.attributes.extract! *self.class.attribute_set.keys.map(&:to_s)
-    super(@extract_attrs.merge(attrs))
-  end
-
-  def sync
-    super(@record)
-  end
-
-  def save
-    if valid?
-      sync
-      @persisted = @record.save
-    else
-      false
-    end
-  end
-end
-
 class PhoneForm < FormModel::Base
   attribute :phone
 
   validates_format_of :phone, with: /\A\d{11}\z/i
 end
 
-class UserForm < RecordForm
+class UserForm < FormModel::Record
   attribute :name
 
   combine EmailForm, PhoneForm
