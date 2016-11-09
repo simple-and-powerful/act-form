@@ -17,7 +17,7 @@ module FormModel
 
     module ClassMethods
       # attribute :name, type: :string
-      # or
+      #   or
       # attribute :name, :string
       def attribute(name, cast_type = :object, **options)
         name = name.to_s
@@ -25,13 +25,6 @@ module FormModel
 
         define_attribute_reader(name, options)
         define_attribute_writer(name, cast_type, options)
-      end
-
-      def merge(new_attribute_set)
-        new_attribute_set.each do |attr_name, attr_arr|
-          cast_type, options = attr_arr
-          attribute attr_name, cast_type, options
-        end
       end
 
       def define_attribute_reader(name, options)

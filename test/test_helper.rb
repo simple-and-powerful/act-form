@@ -58,7 +58,7 @@ class PhoneForm < FormModel::Base
   validates_format_of :phone, with: /\A\d{11}\z/i
 end
 
-class UserForm < FormModel::Record
+class UserForm < FormModel::RecordForm
   attribute :name
 
   combine EmailForm, PhoneForm

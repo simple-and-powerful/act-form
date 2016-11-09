@@ -8,7 +8,7 @@ module FormModel
   end
 
   # Record must respond_to attributes method
-  class Record < Base
+  class RecordForm < Base
     attr_reader :record
     def initialize(record, **attrs)
       @record = record

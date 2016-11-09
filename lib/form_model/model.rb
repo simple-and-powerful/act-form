@@ -1,7 +1,7 @@
 require 'active_support/core_ext/object/deep_dup'
 require 'active_model'
-# require 'virtus'
 require 'form_model/attributes'
+require 'form_model/merge'
 require 'form_model/combinable'
 
 module FormModel
@@ -9,6 +9,11 @@ module FormModel
     extend ActiveSupport::Concern
     include ActiveModel::Model
     include FormModel::Attributes
+    include FormModel::Merge
+
+    def initialize(attributes={})
+      super attributes.select { |k, v| respond_to?("#{k}=") }
+    end
 
     def sync(target)
       self.class.attribute_set.keys.each do |attr|
