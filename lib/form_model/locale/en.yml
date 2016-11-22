@@ -1,0 +1,4 @@
+en:
+  errors:
+    messages:
+      required: "require a value"

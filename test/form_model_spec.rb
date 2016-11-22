@@ -22,6 +22,36 @@ describe FormModel do
     end
   end
 
+  describe '#attribute behavior' do
+    it 'should return empty hash if no attributes set' do
+      form = Class.new(FormModel::Base)
+      (form.new.attributes == {}).must_equal true
+    end
+
+    it 'should return correct attributes if set attributes' do
+      form = Class.new(FormModel::Base) do
+        attribute :name
+      end
+      form.new.name.must_be_nil
+      form.new(name: 'name').name.must_equal 'name'
+    end
+
+    it 'should respect default option' do
+      form = Class.new(FormModel::Base) do
+        attribute :name, default: 'Default Name'
+      end
+      form.new.name.must_equal 'Default Name'
+      form.new(name: 'name').name.must_equal 'name'
+    end
+
+    it 'should respect required option' do
+      foo = FooBarForm.new
+      foo.name.must_be_nil
+      foo.valid?.must_equal false
+      foo.errors.details[:name].must_equal [{:error=>:required}]
+    end
+  end
+
   it 'should return false without calling save method' do
     EmailForm.new.persisted?.must_equal false
   end

@@ -8,16 +8,21 @@ module FormModel
   module Model
     extend ActiveSupport::Concern
     include ActiveModel::Model
-    include FormModel::Attributes
-    include FormModel::Merge
+    include Attributes
+    include Merge
+
+    included do
+      set_callback :validate, :before, :validate_required_attributes
+    end
 
     def initialize(attributes={})
-      super attributes.select { |k, v| respond_to?("#{k}=") }
+      super attributes.select { |k, _| respond_to?("#{k}=") }
     end
 
     def sync(target)
       self.class.attribute_set.keys.each do |attr|
-        target.public_send("#{attr}=", public_send(attr)) if target.respond_to?(attr)
+        next unless target.respond_to?(attr)
+        target.public_send "#{attr}=", public_send(attr)
       end
     end
 
@@ -34,12 +39,22 @@ module FormModel
       !!@persisted
     end
 
+    private
+
+    def validate_required_attributes
+      self.class.attribute_set.each do |attr_name, arr|
+        _, options = arr
+        next if !options[:required]
+        if attributes[attr_name].nil?
+          errors.add(attr_name, :required)
+        end
+      end
+      throw(:abort) unless errors.empty?
+    end
+
     class_methods do
       private
-
       def inherited(child_class)
-        child_class._validators = self._validators.deep_dup
-        child_class._validate_callbacks = self._validate_callbacks.deep_dup
         child_class.include Combinable
         super
       end

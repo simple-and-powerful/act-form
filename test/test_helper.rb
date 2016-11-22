@@ -15,6 +15,10 @@ class EmailForm < FormModel::Base
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 end
 
+class FooBarForm < FormModel::Base
+  attribute :name, required: true
+end
+
 class FooForm < FormModel::Base
   attribute :name
   attribute :age, type: :integer
@@ -64,10 +68,16 @@ class UserForm < FormModel::RecordForm
   combine EmailForm, PhoneForm
 end
 
+class UserAttrForm < FormModel::Base
+  attribute :name
+
+  combine EmailForm, PhoneForm
+end
+
 class CreateUserCommand < FormModel::Command
   attribute :user
 
-  combine UserForm
+  combine UserAttrForm
 
   def perform
     sync(user)

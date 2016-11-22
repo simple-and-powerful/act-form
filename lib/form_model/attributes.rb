@@ -10,36 +10,39 @@ module FormModel
     end
 
     def attributes
-      self.class.attribute_set.keys.map do |attr|
-        [attr, public_send(attr)]
-      end.to_h
+      @attributes || {}
+    end
+
+    private
+
+    def get_default(default, default_provided)
+      return if default == default_provided
+      default.respond_to?(:call) ? default.call : default
     end
 
     module ClassMethods
       # attribute :name, type: :string
       #   or
-      # attribute :name, :string
+      # attribute :name, :string, required: true
       def attribute(name, cast_type = :object, **options)
         name = name.to_s
         self.attribute_set = attribute_set.merge(name => [(options[:type] || cast_type), options])
 
-        define_attribute_reader(name, options)
-        define_attribute_writer(name, cast_type, options)
+        define_reader_method name, **options.slice(:default)
+        define_writer_method name, cast_type
+
+        name
       end
 
-      def define_attribute_reader(name, options)
-        provided_default = options.fetch(:default) { NO_DEFAULT_PROVIDED }
-        define_method name do
-          return instance_variable_get("@#{name}") if instance_variable_defined?("@#{name}")
-          return if provided_default == NO_DEFAULT_PROVIDED
-          provided_default.respond_to?(:call) && provided_default.call || provided_default
-        end
+      def define_reader_method(name, default: NO_DEFAULT_PROVIDED)
+        define_method(name) { attributes[name] || get_default(default, NO_DEFAULT_PROVIDED) }
       end
 
-      def define_attribute_writer(name, cast_type, options)
-        define_method "#{name}=" do |val|
-          deserialized_value = ActiveModel::Type.lookup(cast_type).deserialize(val)
-          instance_variable_set("@#{name}", deserialized_value)
+      def define_writer_method(name, cast_type)
+        define_method("#{name}=") do |value|
+          _value = ActiveModel::Type.lookup(cast_type).deserialize(value)
+          @attributes = attributes.merge({name => _value})
+          _value
         end
       end
 
