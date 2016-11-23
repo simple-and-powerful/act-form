@@ -91,7 +91,8 @@ describe FormModel do
     it 'should sync attributes form record' do
       attributes = {name: 'UserName', email: 'z@g.com', phone: '12345678909'}
       @user = User.new(attributes)
-      @form = UserForm.new(@user)
+      @form = UserForm.new
+      @form.init_by(@user)
       @form.name.must_equal  attributes[:name]
       @form.email.must_equal attributes[:email]
       @form.phone.must_equal attributes[:phone]
@@ -100,14 +101,16 @@ describe FormModel do
     it 'should sync attributes form record and can override' do
       attributes = {name: 'UserName', email: 'z@g.com', phone: '12345678909'}
       @user = User.new(attributes)
-      @form = UserForm.new(@user, name: 'NewName')
+      @form = UserForm.new
+      @form.init_by(@user, name: 'NewName')
       @form.name.must_equal 'NewName'
     end
 
     it 'should sync and save record' do
       attributes = {name: 'UserName', email: 'z@g.com', phone: '12345678909'}
       @user = User.new
-      @form = UserForm.new(@user, attributes)
+      @form = UserForm.new
+      @form.init_by(@user, attributes)
       @form.save.must_equal true
       @user.name.must_equal  attributes[:name]
       @user.email.must_equal attributes[:email]
@@ -117,7 +120,8 @@ describe FormModel do
     it 'should not save record if form is invalid' do
       attributes = {name: 'UserName', email: 'z@g.com', phone: '12345678909'}
       @user = User.new(attributes)
-      @form = UserForm.new(@user, email: 'z')
+      @form = UserForm.new
+      @form.init_by(@user, email: 'z')
       @form.save.must_equal false
       @form.errors.messages[:email].present?.must_equal true
       @user.name.must_equal  attributes[:name]

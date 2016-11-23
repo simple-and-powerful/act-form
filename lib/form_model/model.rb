@@ -15,8 +15,15 @@ module FormModel
       set_callback :validate, :before, :validate_required_attributes
     end
 
-    def initialize(attributes={})
-      super attributes.select { |k, _| respond_to?("#{k}=") }
+    def initialize(attrs={})
+      super attrs.select { |k, _| respond_to?("#{k}=") }
+    end
+
+    # Record must respond_to attributes method
+    def init_by(record, **attrs)
+      @record = record
+      _attrs  = record.attributes.extract! *self.class.attribute_set.keys.map(&:to_s)
+      assign_attributes _attrs.merge(attrs)
     end
 
     def sync(target)
@@ -26,7 +33,8 @@ module FormModel
       end
     end
 
-    def save(target)
+    def save(target = nil)
+      target ||= @record
       if valid?
         sync(target)
         @persisted = target.save

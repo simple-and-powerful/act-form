@@ -62,13 +62,7 @@ class PhoneForm < FormModel::Base
   validates_format_of :phone, with: /\A\d{11}\z/i
 end
 
-class UserForm < FormModel::RecordForm
-  attribute :name
-
-  combine EmailForm, PhoneForm
-end
-
-class UserAttrForm < FormModel::Base
+class UserForm < FormModel::Base
   attribute :name
 
   combine EmailForm, PhoneForm
@@ -77,7 +71,7 @@ end
 class CreateUserCommand < FormModel::Command
   attribute :user
 
-  combine UserAttrForm
+  combine UserForm
 
   def perform
     sync(user)
