@@ -1,5 +1,4 @@
 require 'active_support/concern'
-require 'form_model/utils'
 
 module FormModel
   module Combinable
