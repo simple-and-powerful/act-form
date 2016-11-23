@@ -13,6 +13,4 @@ module FormModel
   end
 end
 
-require 'form_model/railtie' if defined?(Rails)
-
 I18n.load_path << "#{File.dirname(__FILE__)}/form_model/locale/en.yml"
