@@ -1,4 +1,3 @@
-require 'active_support/core_ext/object/deep_dup'
 require 'active_model'
 require 'form_model/attributes'
 require 'form_model/merge'
