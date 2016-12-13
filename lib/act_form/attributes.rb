@@ -1,6 +1,6 @@
-require 'form_model/type'
+require 'act_form/type'
 
-module FormModel
+module ActForm
   module Attributes
     extend ActiveSupport::Concern
 

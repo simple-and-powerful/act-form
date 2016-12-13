@@ -1,6 +1,6 @@
 require_relative './test_helper'
 
-describe FormModel do
+describe ActForm do
 
   def it_should_sync_to_bar_correctly(form_class, attributes)
     @form = form_class.new(attributes)
@@ -24,12 +24,12 @@ describe FormModel do
 
   describe '#attribute behavior' do
     it 'should return empty hash if no attributes set' do
-      form = Class.new(FormModel::Base)
+      form = Class.new(ActForm::Base)
       (form.new.attributes == {}).must_equal true
     end
 
     it 'should return correct attributes if set attributes' do
-      form = Class.new(FormModel::Base) do
+      form = Class.new(ActForm::Base) do
         attribute :name
       end
       form.new.name.must_be_nil
@@ -37,7 +37,7 @@ describe FormModel do
     end
 
     it 'should respect default option' do
-      form = Class.new(FormModel::Base) do
+      form = Class.new(ActForm::Base) do
         attribute :name, default: 'Default Name'
       end
       form.new.name.must_equal 'Default Name'
@@ -71,7 +71,7 @@ describe FormModel do
 
   describe '#combine behavior' do
     it 'should raise error when combine itself' do
-      klass = Class.new(FormModel::Base)
+      klass = Class.new(ActForm::Base)
       ->{ klass.combine(klass) }.must_raise ArgumentError
     end
 

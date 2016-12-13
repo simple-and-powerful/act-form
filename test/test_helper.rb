@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'form_model'
+require 'act_form'
 require 'pry'
 
 BarAttributes = %i(name age email gender other)
@@ -9,17 +9,17 @@ Bar = Struct.new('Bar', *BarAttributes) do
   end
 end
 
-class EmailForm < FormModel::Base
+class EmailForm < ActForm::Base
   attribute :email
 
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 end
 
-class FooBarForm < FormModel::Base
+class FooBarForm < ActForm::Base
   attribute :name, required: true
 end
 
-class FooForm < FormModel::Base
+class FooForm < ActForm::Base
   attribute :name
   attribute :age, type: :integer
 
@@ -32,7 +32,7 @@ class FooForm < FormModel::Base
   end
 end
 
-class GlueForm < FormModel::Base
+class GlueForm < ActForm::Base
   attribute :gender
 
   combine EmailForm, FooForm
@@ -56,19 +56,19 @@ class User
   end
 end
 
-class PhoneForm < FormModel::Base
+class PhoneForm < ActForm::Base
   attribute :phone
 
   validates_format_of :phone, with: /\A\d{11}\z/i
 end
 
-class UserForm < FormModel::Base
+class UserForm < ActForm::Base
   attribute :name
 
   combine EmailForm, PhoneForm
 end
 
-class CreateUserCommand < FormModel::Command
+class CreateUserCommand < ActForm::Command
   attribute :user
 
   combine UserForm

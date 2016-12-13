@@ -1,13 +1,13 @@
-# FormModel
+# ActForm
 
-FormModel is the gem that provide a simple way to create `form object` or `command object` or `service object`, it only depends on `activemodel >= 5` and provides few api.
+ActForm is the gem that provide a simple way to create `form object` or `command object` or `service object`, it only depends on `activemodel >= 5` and provides few api.
 
 ## Usage
 
 #### API - `attribute`
 
 ```ruby
-class UserForm < FormModel::Base
+class UserForm < ActForm::Base
   attribute :name, required: true
   attribute :age,  type: :integer
   attribute :address
@@ -39,7 +39,7 @@ form.errors.full_messages # => ["Name require a value"]
 #### API - `valid?`
 Compliant with the active model api
 ```ruby
-class PhoneForm < FormModel::Base
+class PhoneForm < ActForm::Base
   attribute :phone
   
   validates_format_of :phone, with: /\A\d{11}\z/i
@@ -106,12 +106,12 @@ target.saved # => true
 #### API - `combine`
 form can combine to other forms
 ```ruby
-class PhoneForm < FormModel::Base
+class PhoneForm < ActForm::Base
   attribute :phone
   validates_format_of :phone, with: /\A\d{11}\z/i
 end
 
-class EmailForm < FormModel::Base
+class EmailForm < ActForm::Base
   attribute :email
   
   validate :check_email
@@ -121,11 +121,11 @@ class EmailForm < FormModel::Base
   end
 end
 
-class UserForm < FormModel::Base
+class UserForm < ActForm::Base
   combine PhoneForm, EmailForm
 end
 
-class AdminForm < FormModel::Base
+class AdminForm < ActForm::Base
   combine PhoneForm
 end
 
@@ -148,7 +148,7 @@ Command object almost like form object. Command object can't init by `new`, and 
 command object must respond to `perform` method.
 
 ```ruby
-class CreateUserCommand < FormModel::Command
+class CreateUserCommand < ActForm::Command
   combine UserForm
   
   def perform
@@ -170,7 +170,7 @@ end
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'form_model'
+gem 'act_form'
 ```
 
 And then execute:
@@ -179,7 +179,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install form_model
+    $ gem install act_form
 
 
 ## Development
@@ -188,7 +188,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/form_model. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/act_form. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License

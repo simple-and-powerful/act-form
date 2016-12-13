@@ -1,9 +1,9 @@
 require 'active_model'
-require 'form_model/attributes'
-require 'form_model/merge'
-require 'form_model/combinable'
+require 'act_form/attributes'
+require 'act_form/merge'
+require 'act_form/combinable'
 
-module FormModel
+module ActForm
   module Model
     extend ActiveSupport::Concern
     include ActiveModel::Model

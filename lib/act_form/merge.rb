@@ -1,4 +1,4 @@
-module FormModel
+module ActForm
   module Merge
     extend ActiveSupport::Concern
 

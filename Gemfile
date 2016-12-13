@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in form_model.gemspec
+# Specify your gem's dependencies in act_form.gemspec
 gemspec
 
 group :development, :test do

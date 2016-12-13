@@ -1,6 +1,6 @@
 require 'active_model/type'
 
-module FormModel
+module ActForm
   module Type
     class Object < ActiveModel::Type::Value
       def type
@@ -10,4 +10,4 @@ module FormModel
   end
 end
 
-ActiveModel::Type.register(:object, FormModel::Type::Object)
+ActiveModel::Type.register(:object, ActForm::Type::Object)

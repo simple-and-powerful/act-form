@@ -1,6 +1,6 @@
 require 'active_support/concern'
 
-module FormModel
+module ActForm
   module Runnable
     extend ActiveSupport::Concern
 
