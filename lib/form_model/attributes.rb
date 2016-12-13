@@ -26,7 +26,8 @@ module FormModel
       # attribute :name, :string, required: true
       def attribute(name, cast_type = :object, **options)
         name = name.to_s
-        self.attribute_set = attribute_set.merge(name => [(options[:type] || cast_type), options])
+        cast_type = options[:type] || cast_type
+        self.attribute_set = attribute_set.merge(name => [cast_type, options])
 
         define_reader_method name, **options.slice(:default)
         define_writer_method name, cast_type
