@@ -31,7 +31,7 @@ form.valid? # => false
 form.errors.full_messages # => ["Name require a value"]
 ```
 
-#### Difference between then `required` and `validates_presence_of`
+#### Difference between `required` and `validates_presence_of`
 `required` run before validation, it will cancel other validations if return false.
 
 ### form object
