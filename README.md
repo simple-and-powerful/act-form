@@ -32,7 +32,7 @@ form.errors.full_messages # => ["Name require a value"]
 ```
 
 #### Difference between `required` and `validates_presence_of`
-`required` run before validation, it will cancel other validations if return false.
+`required` will run before the validation, and it will cancel other validations if return false.
 
 ### form object
 
@@ -99,6 +99,7 @@ target.phone = '12345678901'
 
 form = PhoneForm.new
 form.init_by(target)
+form.phone # => '12345678901'
 form.save # => true
 target.saved # => true
 ```
