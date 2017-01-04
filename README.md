@@ -77,7 +77,7 @@ target = Class.new do
 end.new
 
 form = PhoneForm.new(phone: '12345678901')
-form.save(target)
+form.save(target) # same as form.sync(target) and target.save
 target.phone # => '12345678901'
 target.saved # => true
 form.persisted? # => true
@@ -153,9 +153,12 @@ class CreateUserCommand < ActForm::Command
   combine UserForm
   
   def perform
-    # User.create(attributes)
+    User.create(attributes)
   end
 end
+
+CreateUserCommand.new 
+# => NoMethodError: private method `new' called for CreateUserCommand:Class 
 
 command = CreateUserCommand.run(phone: '12345678901')
 if command.success?
