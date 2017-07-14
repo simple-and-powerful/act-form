@@ -28,8 +28,8 @@ module ActForm
 
     # Record must respond_to attributes method
     def init_by(record, **attrs)
-      record  = record
-      _attrs  = @record.attributes.extract! *self.class.attribute_set.keys.map(&:to_s)
+      @record = record
+      _attrs  = record.attributes.extract! *self.class.attribute_set.keys.map(&:to_s)
       assign_attributes _attrs.merge(attrs)
     end
 
