@@ -18,10 +18,18 @@ module ActForm
       super attrs.select { |k, _| respond_to?("#{k}=") }
     end
 
+    def record=(record)
+      if record.respond_to?(:attributes)
+        @record = record
+      else
+        raise ArgumentError, 'Record must respond to attributes method!'
+      end
+    end
+
     # Record must respond_to attributes method
     def init_by(record, **attrs)
-      @record = record
-      _attrs  = record.attributes.extract! *self.class.attribute_set.keys.map(&:to_s)
+      record  = record
+      _attrs  = @record.attributes.extract! *self.class.attribute_set.keys.map(&:to_s)
       assign_attributes _attrs.merge(attrs)
     end
 
