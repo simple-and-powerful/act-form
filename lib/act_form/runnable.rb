@@ -1,6 +1,7 @@
 require 'active_support/concern'
 
 module ActForm
+  class RunError < StandardError; end
   module Runnable
     extend ActiveSupport::Concern
 
@@ -11,6 +12,10 @@ module ActForm
     class_methods do
       def run(*args)
         new(*args).run
+      end
+
+      def run!(*args)
+        new(*args).run!
       end
     end
 
@@ -24,6 +29,16 @@ module ActForm
         @performed = true
       end
       self
+    end
+
+    def run!
+      if valid?
+        @result    = perform
+        @performed = true
+        result
+      else
+        raise RunError, 'Verification failed'
+      end
     end
 
     def perform; end
