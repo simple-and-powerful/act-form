@@ -80,3 +80,12 @@ class CreateUserCommand < ActForm::Command
   end
 end
 
+class ReassignCommand < ActForm::Command
+  attribute :content
+
+  def perform
+    content = self.content + 'bar'
+    content
+  end
+end
+

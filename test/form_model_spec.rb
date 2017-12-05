@@ -98,6 +98,18 @@ describe ActForm do
       @form.phone.must_equal attributes[:phone]
     end
 
+    it 'should raise exception if record not respond to attributes method' do
+      @form = UserForm.new
+      err = -> { @form.record = Object.new }.must_raise ArgumentError
+      err.message.must_equal 'Record must respond to attributes method!'
+    end
+
+    it 'should raise exception if init by object not respond to attributes method' do
+      @form = UserForm.new
+      err = -> { @form.init_by(Object.new) }.must_raise ArgumentError
+      err.message.must_equal 'Record must respond to attributes method!'
+    end
+
     it 'should sync attributes form record and can override' do
       attributes = {name: 'UserName', email: 'z@g.com', phone: '12345678909'}
       @user = User.new(attributes)
@@ -145,5 +157,18 @@ describe ActForm do
       command.result.must_equal 'saved'
       @user.saved?.must_equal true
     end
+
+    it 'should raise exception with run! method' do
+      @user = User.new
+      err = -> { CreateUserCommand.run!(user: @user) }.must_raise ActForm::RunError
+      err.message.must_equal 'Verification failed'
+    end
+
+    it 'should reassign value correctly' do
+      command = ReassignCommand.run(content: 'foo')
+      command.success?.must_equal true
+      command.result.must_equal 'foobar'
+    end
+
   end
 end
