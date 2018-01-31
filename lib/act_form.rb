@@ -7,7 +7,8 @@ module ActForm
     include Model
   end
 
-  class Command < Base
+  class Command
+    include Model
     include Runnable
     private_class_method :new
   end

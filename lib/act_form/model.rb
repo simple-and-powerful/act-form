@@ -19,17 +19,14 @@ module ActForm
     end
 
     def record=(record)
-      if record.respond_to?(:attributes)
-        @record = record
-      else
-        raise ArgumentError, 'Record must respond to attributes method!'
-      end
+      raise ArgumentError, 'Record must respond to attributes method!' unless record.respond_to?(:attributes)
+      @record = record
     end
 
     # Record must respond_to attributes method
     def init_by(record, **attrs)
-      @record = record
-      _attrs  = record.attributes.extract! *self.class.attribute_set.keys.map(&:to_s)
+      self.record = record
+      _attrs = record.attributes.extract! *self.class.attribute_set.keys.map(&:to_s)
       assign_attributes _attrs.merge(attrs)
     end
 
@@ -68,7 +65,6 @@ module ActForm
     end
 
     class_methods do
-      private
       def inherited(child_class)
         child_class.include Combinable
         super
