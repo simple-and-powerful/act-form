@@ -3,3 +3,4 @@
 * update spec syntex
 * support rails `6.0`
 * add shortcut alias method `attr` for `attribute`
+* fix issue#2 
