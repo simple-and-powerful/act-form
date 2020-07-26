@@ -56,6 +56,7 @@ module ActForm
     def validate_required_attributes
       self.class.attribute_set.each do |attr_name, arr|
         _, options = arr
+        next if options.key?(:default)
         next if !options[:required]
         if attributes[attr_name].nil?
           errors.add(attr_name, :required)

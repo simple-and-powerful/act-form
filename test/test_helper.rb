@@ -19,6 +19,10 @@ class FooBarForm < ActForm::Base
   attribute :name, required: true
 end
 
+class FooBarFooForm < ActForm::Base
+  attribute :name_with_default, required: true, default: 'DefaultName'
+end
+
 class FooForm < ActForm::Base
   attribute :name
   attribute :age, type: :integer

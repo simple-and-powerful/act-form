@@ -34,6 +34,7 @@ module ActForm
 
         name
       end
+      alias_method :attr, :attribute
 
       def define_reader_method(name, default: NO_DEFAULT_PROVIDED)
         define_method(name) { attributes[name] || get_default(default, NO_DEFAULT_PROVIDED) }
