@@ -37,7 +37,13 @@ module ActForm
       alias_method :attr, :attribute
 
       def define_reader_method(name, default: NO_DEFAULT_PROVIDED)
-        define_method(name) { attributes[name] || get_default(default, NO_DEFAULT_PROVIDED) }
+        define_method(name) do
+          if attributes.key?(name)
+            attributes[name]
+          else
+            get_default(default, NO_DEFAULT_PROVIDED)
+          end
+        end
       end
 
       def define_writer_method(name, cast_type)

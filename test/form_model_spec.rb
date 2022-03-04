@@ -52,6 +52,24 @@ describe ActForm do
       expect(form.new(name: 'name').name).must_equal 'name'
     end
 
+    it 'should return false when pass value is false' do
+      form = Class.new(ActForm::Base) do
+        attribute :name
+      end
+      expect(form.new(name: false).name).must_equal false
+    end
+
+    it 'should type cast' do
+      form = Class.new(ActForm::Base) do
+        attribute :name, type: :string
+        attribute :age,  type: :integer
+        attribute :foo,  type: :boolean
+      end
+      expect(form.new(name: :abc).name).must_equal 'abc'
+      expect(form.new(age: '1').age).must_equal 1
+      expect(form.new(foo: 0).foo).must_equal false
+    end
+
     it 'should respect required option' do
       foo = FooBarForm.new
       expect(foo.name).must_be_nil
