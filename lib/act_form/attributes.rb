@@ -3,7 +3,7 @@
 require 'act_form/type'
 
 module ActForm
-  module Attributes
+  module Attributes # rubocop:disable Style/Documentation
     extend ActiveSupport::Concern
 
     included do
@@ -19,10 +19,11 @@ module ActForm
 
     def get_default(default, default_provided)
       return if default == default_provided
+
       default.respond_to?(:call) ? default.call : default
     end
 
-    module ClassMethods
+    module ClassMethods # rubocop:disable Style/Documentation
       # attribute :name, type: :string
       #   or
       # attribute :name, :string, required: true
@@ -36,7 +37,7 @@ module ActForm
 
         name
       end
-      alias_method :attr, :attribute
+      alias attr attribute
 
       def define_reader_method(name, default: NO_DEFAULT_PROVIDED)
         define_method(name) do
@@ -50,16 +51,14 @@ module ActForm
 
       def define_writer_method(name, cast_type)
         define_method("#{name}=") do |value|
-          _value = ActiveModel::Type.lookup(cast_type).deserialize(value)
-          @attributes = attributes.merge({ name => _value })
-          _value
+          val = ActiveModel::Type.lookup(cast_type).deserialize(value)
+          @attributes = attributes.merge({ name => val })
+          val
         end
       end
 
-      private
-
       NO_DEFAULT_PROVIDED = Object.new
       private_constant :NO_DEFAULT_PROVIDED
-    end # class_methods
+    end
   end
 end
