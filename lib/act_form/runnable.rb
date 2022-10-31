@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 require 'active_support/concern'
 
 module ActForm
   class RunError < StandardError; end
+
+  # Define runnable behaivor for form object.
   module Runnable
     extend ActiveSupport::Concern
 
@@ -10,6 +14,10 @@ module ActForm
     end
 
     class_methods do
+      def setup(&block)
+        self.set_callback :validate, :before, &block
+      end
+
       def run(*args)
         new(*args).run
       end
@@ -19,7 +27,7 @@ module ActForm
       end
     end
 
-    def has_errors?
+    def has_errors? # rubocop:disable Naming/PredicateName
       !errors.empty?
     end
 
@@ -32,7 +40,7 @@ module ActForm
     end
 
     def run!
-      if valid?
+      if valid? # rubocop:disable Style/GuardClause
         @result    = perform
         @performed = true
         result

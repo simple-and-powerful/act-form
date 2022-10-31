@@ -1,0 +1,23 @@
+AllCops:
+  Exclude:
+    - "test/**/*"
+    - "act_form.gemspec"
+    - "Rakefile"
+    - "Gemfile"
+
+
+MethodLength:
+  Max: 20
+
+Style/Documentation:
+  Exclude:
+    - "lib/act_form.rb"
+
+Style/RedundantSelf:
+  Enabled: false
+
+Style/CommentedKeyword:
+  Enabled: false
+
+Lint/UnderscorePrefixedVariableName:
+  Enabled: false
