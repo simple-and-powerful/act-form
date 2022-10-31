@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module ActForm
-  module Merge
+  module Merge # rubocop:disable Style/Documentation
     extend ActiveSupport::Concern
 
     class_methods do
@@ -10,6 +12,5 @@ module ActForm
         end
       end
     end
-
   end
 end

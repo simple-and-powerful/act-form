@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'act_form/version'
 require 'act_form/model'
 require 'act_form/runnable'

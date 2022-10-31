@@ -93,3 +93,15 @@ class ReassignCommand < ActForm::Command
   end
 end
 
+class SetupTestCommand < ActForm::Command
+  attribute :content, required: true
+
+  setup do
+    @value = 123
+  end
+
+  def perform
+    @value
+  end
+end
+

@@ -182,6 +182,13 @@ describe ActForm do
       expect(command.success?).must_equal false
     end
 
+    it 'should respect `setup` block' do
+      command = SetupTestCommand.run(content: 'foobar')
+      expect(command.content).must_equal 'foobar'
+      expect(command.success?).must_equal true
+      expect(command.result).must_equal 123
+    end
+
     it 'should as runnable with run method successful' do
       @user = User.new
       command = CreateUserCommand.run(user: @user, name: 'Name', email: 'z@g.com', phone: '12345678909')

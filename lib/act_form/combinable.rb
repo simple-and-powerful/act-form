@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'active_support/concern'
 
 module ActForm
-  module Combinable
+  module Combinable # rubocop:disable Style/Documentation
     extend ActiveSupport::Concern
 
     included do
@@ -17,12 +19,14 @@ module ActForm
 
     def combined_forms_valid?(context)
       return if _forms.empty?
+
       _forms.each do |form_class|
         form = form_class.new(attributes)
         form.valid?(context)
         form.errors.details.each do |attr_name, arr|
           arr.each do |error|
             next if error[:error] == :required
+
             errors.add(attr_name, error[:error])
           end
         end
@@ -30,7 +34,6 @@ module ActForm
     end
 
     class_methods do
-
       def combine(*forms)
         forms.each do |form_class|
           raise ArgumentError, "can't combine itself" if form_class == self
@@ -40,9 +43,7 @@ module ActForm
           self.merge_attribute_set_from(form_class)
           self._forms << form_class
         end
-      end
-
+      end # End of combine
     end
-
   end
 end
