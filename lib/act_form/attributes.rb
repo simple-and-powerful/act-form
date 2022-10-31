@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'act_form/type'
 
 module ActForm
@@ -49,7 +51,7 @@ module ActForm
       def define_writer_method(name, cast_type)
         define_method("#{name}=") do |value|
           _value = ActiveModel::Type.lookup(cast_type).deserialize(value)
-          @attributes = attributes.merge({name => _value})
+          @attributes = attributes.merge({ name => _value })
           _value
         end
       end
@@ -58,7 +60,6 @@ module ActForm
 
       NO_DEFAULT_PROVIDED = Object.new
       private_constant :NO_DEFAULT_PROVIDED
-
     end # class_methods
   end
 end
