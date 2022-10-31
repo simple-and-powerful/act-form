@@ -144,15 +144,21 @@ AdminForm.new(phone: '12345678901').valid? # => true
 
 Command object almost like form object. Command object can't init by `new`, and it has some new features.
 
-#### API - `perform`, `run`, `success?`, `failure?`
+#### API - `perform`, `run`, `success?`, `failure?`, `setup`
 
 command object must respond to `perform` method.
 
 ```ruby
 class CreateUserCommand < ActForm::Command
   combine UserForm
+
+  # Do some pre-inialize actions.
+  setup do
+    @name = 'foo'
+  end
   
   def perform
+    attributes[:name] = @name
     User.create(attributes)
   end
 end
