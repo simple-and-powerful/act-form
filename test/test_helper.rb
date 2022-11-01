@@ -96,12 +96,19 @@ end
 class SetupTestCommand < ActForm::Command
   attribute :content, required: true
 
+  validate :set_value
+
   setup do
+    @setup_value = 123
     @value = 123
   end
 
   def perform
-    @value
+    [@setup_value, @value]
+  end
+
+  def set_value
+    @value = 456
   end
 end
 

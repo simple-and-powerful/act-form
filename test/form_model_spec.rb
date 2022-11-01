@@ -182,11 +182,13 @@ describe ActForm do
       expect(command.success?).must_equal false
     end
 
-    it 'should respect `setup` block' do
+    it 'should respect `setup` block with order' do
       command = SetupTestCommand.run(content: 'foobar')
       expect(command.content).must_equal 'foobar'
       expect(command.success?).must_equal true
-      expect(command.result).must_equal 123
+      setup_value, value = command.result
+      expect(setup_value).must_equal 123
+      expect(value).must_equal 456
     end
 
     it 'should as runnable with run method successful' do

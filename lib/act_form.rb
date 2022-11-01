@@ -11,6 +11,7 @@ module ActForm
 
   class Command
     include Model
+    include ActiveModel::Validations::Callbacks
     include Runnable
     private_class_method :new
   end

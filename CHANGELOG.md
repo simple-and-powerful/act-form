@@ -1,4 +1,4 @@
-# 0.4.2
+# 0.4.3
 * [Feature] issue#6 add `setup` method
 ```ruby
 class SomeCommand < Act::Command
@@ -12,6 +12,8 @@ class SomeCommand < Act::Command
   end
 end
 ```
+
+# 0.4.2 [yank]
 
 # 0.4.1
 * fix issue#5

@@ -15,7 +15,7 @@ module ActForm
 
     class_methods do
       def setup(&block)
-        self.set_callback :validate, :before, &block
+        self.before_validation(&block)
       end
 
       def run(*args)
