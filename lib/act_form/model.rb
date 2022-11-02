@@ -9,11 +9,12 @@ module ActForm
   module Model # rubocop:disable Style/Documentation
     extend ActiveSupport::Concern
     include ActiveModel::Model
+    include ActiveModel::Validations::Callbacks
     include Attributes
     include Merge
 
     included do
-      set_callback :validate, :before, :validate_required_attributes
+      set_callback :validation, :before, :validate_required_attributes
     end
 
     def initialize(attrs = {})

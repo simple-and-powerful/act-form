@@ -191,6 +191,12 @@ describe ActForm do
       expect(value).must_equal 456
     end
 
+    it 'should respect `setup` after required validation' do
+      command = SetupTestCommand.run
+      expect(command.success?).must_equal false
+      expect(command.errors.details[:content]).must_equal [{:error=>:required}]
+    end
+
     it 'should as runnable with run method successful' do
       @user = User.new
       command = CreateUserCommand.run(user: @user, name: 'Name', email: 'z@g.com', phone: '12345678909')

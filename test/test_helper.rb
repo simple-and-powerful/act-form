@@ -99,6 +99,7 @@ class SetupTestCommand < ActForm::Command
   validate :set_value
 
   setup do
+    raise 'empty' if content.nil?
     @setup_value = 123
     @value = 123
   end
