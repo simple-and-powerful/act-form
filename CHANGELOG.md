@@ -1,3 +1,6 @@
+# 0.4.4
+* [Fix] fix `setup` run before `required` validation
+
 # 0.4.3
 * [Feature] issue#6 add `setup` method
 ```ruby
