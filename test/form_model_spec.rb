@@ -154,7 +154,7 @@ describe ActForm do
       attributes = {name: 'UserName', email: 'z@g.com', phone: '12345678909'}
       @user = User.new
       @form = UserForm.new
-      @form.init_by(@user, attributes)
+      @form.init_by(@user, **attributes)
       expect(@form.save).must_equal true
       expect(@user.name).must_equal  attributes[:name]
       expect(@user.email).must_equal attributes[:email]
