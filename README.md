@@ -31,7 +31,7 @@ module WorkWithGrapeSpec
       'hello world'
     end
 
-    contract FooService.contract do
+    contract UserForm.contract do
       required(:desc).filled
     end
     get '/bar' do
