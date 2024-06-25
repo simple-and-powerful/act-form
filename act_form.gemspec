@@ -1,5 +1,4 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'act_form/version'
 
@@ -9,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['zires']
   spec.email         = ['zshuaibin@gmail.com']
 
-  spec.summary       = %q{A simple way to create form/command/service objects.}
-  spec.description   = %q{The simple way to create form objects or command/service objects with ActiveModel.}
+  spec.summary       = 'A simple way to create form/command/service objects.'
+  spec.description   = 'The simple way to create form objects or command/service objects with ActiveModel.'
   spec.homepage      = 'https://github.com/simple-and-powerful/act-form'
   spec.license       = 'MIT'
 
@@ -27,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'activemodel', '>= 5.0.0'
+  spec.add_runtime_dependency 'dry-schema', '>= 1.13.4'
 
   spec.add_development_dependency 'bundler', '~> 2.1'
   spec.add_development_dependency 'rake', '~> 13.0'

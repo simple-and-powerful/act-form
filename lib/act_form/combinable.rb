@@ -34,7 +34,9 @@ module ActForm
     end
 
     class_methods do
+      # <b>DEPRECATED:</b> Please use <tt>ruby pure module</tt> instead.
       def combine(*forms)
+        warn '[DEPRECATION] `combine` is deprecated and will be removed in future versions. Instead, please use a pure Ruby module approach. For more details, refer to [link to migration guide].' # rubocop:disable Layout/LineLength
         forms.each do |form_class|
           raise ArgumentError, "can't combine itself" if form_class == self
 
