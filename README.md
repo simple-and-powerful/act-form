@@ -2,6 +2,45 @@
 
 ActForm is the gem that provide a simple way to create `form object` or `command object` or `service object`, it only depends on `activemodel >= 5` and provides few api.
 
+## About v0.5.0
+
+With the power of `dry-schema`, ActForm now can support all the features of `dry-schema`, like:
+
+```ruby
+class UserForm < ActForm::Base
+  params do
+    required(:name).filled.desc('Name')
+    optional(:age).value(:integer).desc('Age')
+    optional(:address).desc('Address')
+    optional(:nickname).default('nick').desc('Nick')
+    # below will support in the future
+    # attribute :desc, default: ->{ 'desc' }
+  end
+end
+```
+
+Add we can integrate with `grape` easyly.
+
+```ruby
+module WorkWithGrapeSpec
+  class API < Grape::API
+    format :json
+
+    contract UserForm.contract
+    get '/foo' do
+      'hello world'
+    end
+
+    contract FooService.contract do
+      required(:desc).filled
+    end
+    get '/bar' do
+      'hello world'
+    end
+  end
+end
+```
+
 ## Usage
 
 #### API - `attribute`
