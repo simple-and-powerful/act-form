@@ -1,0 +1,5 @@
+zh-CN:
+  errors:
+    messages:
+      required: "是一个必填项"
+

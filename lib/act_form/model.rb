@@ -2,6 +2,7 @@
 
 require 'active_model'
 require 'act_form/attributes'
+require 'act_form/schema'
 require 'act_form/merge'
 require 'act_form/combinable'
 
@@ -11,10 +12,12 @@ module ActForm
     include ActiveModel::Model
     include ActiveModel::Validations::Callbacks
     include Attributes
+    include Schema
     include Merge
 
     included do
       set_callback :validation, :before, :validate_required_attributes
+      set_callback :validation, :before, :validate_contract
     end
 
     def initialize(attrs = {})
@@ -69,6 +72,17 @@ module ActForm
         end
       end
       throw(:abort) unless errors.empty?
+    end
+
+    def validate_contract
+      return if self.class._schema.nil?
+
+      result = self.class._schema.validate(self.attributes)
+      return if result.success?
+
+      result.errors(full: true).each do |err|
+        errors.add(err.path.first, :invalid, message: err.text)
+      end
     end
 
     class_methods do
