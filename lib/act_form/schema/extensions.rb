@@ -18,6 +18,7 @@ module ActForm
       module MacrosExtension
         def default(value)
           schema_dsl.defaults[name] = value
+          self
         end
 
         def desc(value)
